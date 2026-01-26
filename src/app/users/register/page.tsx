@@ -1,15 +1,14 @@
 "use client";
 
-import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { UsersService } from "@/api/userApi";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { clientAuthProvider } from "@/lib/authProvider";
 import { User } from "@/types/user";
-import {UsersService} from "@/api/userApi";
-import {clientAuthProvider} from "@/lib/authProvider";
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 type FormValues = {
     username: string;

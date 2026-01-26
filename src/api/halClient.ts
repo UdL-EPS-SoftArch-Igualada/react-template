@@ -1,4 +1,4 @@
-import halfred, {Resource} from "halfred";
+import halfred, { Resource } from "halfred";
 
 const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8080";
 
@@ -16,7 +16,8 @@ export async function getHal(path: string, authProvider: { getAuth: () => Promis
     const res = await fetch(url, {
         headers: {
             "Accept": "application/hal+json",
-            ...(authorization ? { Authorization: authorization } : {}), },
+            ...(authorization ? { Authorization: authorization } : {}),
+        },
         cache: "no-store",
     });
     if (!res.ok) {
@@ -33,7 +34,8 @@ export async function postHal(path: string, body: Resource, authProvider: { getA
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/hal+json",
-            ...(authorization ? { Authorization: authorization } : {}), },
+            ...(authorization ? { Authorization: authorization } : {}),
+        },
         body: JSON.stringify(body),
         cache: "no-store",
     });

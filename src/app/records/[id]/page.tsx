@@ -1,11 +1,15 @@
-import Link from "next/link";
+import { RecordService } from "@/api/recordApi";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { serverAuthProvider } from "@/lib/authProvider";
-import { RecordService } from "@/api/recordApi";
 import { Record } from "@/types/record";
 import { User } from "@/types/user";
+import Link from "next/link";
 
-export default async function RecordPage(props: { params: Promise<{ id: string }> }) {
+interface RecordPageProps {
+    params: Promise<{ id: string }>;
+}
+
+export default async function RecordPage(props: Readonly<RecordPageProps>) {
     const recordService = new RecordService(serverAuthProvider)
     const record: Record = await recordService.getRecordById((await props.params).id);
     const owner: User = await recordService.getRecordRelation<User>(record, "ownedBy");

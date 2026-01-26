@@ -1,10 +1,10 @@
-import { getHal, mergeHal, mergeHalArray, postHal } from "./halClient";
 import type { AuthProvider } from "@/lib/authProvider";
 import { Record } from "@/types/record";
-import {User} from "@/types/user";
+import { User } from "@/types/user";
+import { getHal, mergeHal, mergeHalArray, postHal } from "./halClient";
 
 export class RecordService {
-    constructor(private authProvider: AuthProvider) {
+    constructor(private readonly authProvider: AuthProvider) {
     }
 
     async getRecords(): Promise<Record[]> {

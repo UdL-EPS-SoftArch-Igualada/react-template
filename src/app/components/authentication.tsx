@@ -1,6 +1,6 @@
 "use client";
+import { User } from "@/types/user";
 import { createContext, useContext, useState } from "react";
-import {User} from "@/types/user";
 
 type AuthContextType = {
     user: User | null;

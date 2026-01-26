@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { UsersService } from "@/api/userApi";
 import { useAuth } from "@/app/components/authentication";
-import { deleteCookie, setCookie } from "cookies-next";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { UsersService } from "@/api/userApi";
-import { clientAuthProvider } from "@/lib/authProvider";
+import { AUTH_COOKIE_NAME, clientAuthProvider } from "@/lib/authProvider";
+import { deleteCookie, setCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 type FormValues = {
     username: string;
@@ -21,12 +21,14 @@ export default function LoginPage() {
     const router = useRouter();
     const { setUser } = useAuth();
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>();
-    const [ errorMessage, setErrorMessage ] = useState<string | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     async function login(username: string, password: string) {
         setErrorMessage(null);
-        const authorization = `Basic ${btoa(`${username}:${password}`)}`;
-        setCookie("MYCOFFEE_AUTH", authorization, {
+        // Use Buffer for base64 encoding (Node.js compatible)
+        const base64 = Buffer.from(`${username}:${password}`).toString('base64');
+        const authorization = `Basic ${base64}`;
+        setCookie(AUTH_COOKIE_NAME, authorization, {
             path: "/",
             secure: true,
             sameSite: "strict",
@@ -41,7 +43,7 @@ export default function LoginPage() {
         login(data.username, data.password).then(() => {
             router.push(`/users/${data.username}`);
         }).catch(() => {
-            deleteCookie("MYCOFFEE_AUTH");
+            deleteCookie(AUTH_COOKIE_NAME);
             setErrorMessage("Login failed");
         });
     };
