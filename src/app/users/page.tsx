@@ -12,9 +12,9 @@ export default async function UsersPage() {
                     <h1 className="text-2xl font-semibold mb-6">Users</h1>
 
                     <ul className="space-y-3 w-full">
-                        {users.map((user, i) => (
+                        {users.map((user) => (
                             <li
-                                key={i}
+                                key={user.username}
                                 className="p-4 w-full border rounded-lg bg-white shadow-sm hover:shadow transition dark:bg-black"
                             >
                                 <Link className="font-medium" href={`/users/${user.username}`}>

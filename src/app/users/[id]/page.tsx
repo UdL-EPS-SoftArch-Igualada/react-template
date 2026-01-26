@@ -5,7 +5,11 @@ import { serverAuthProvider } from "@/lib/authProvider";
 import { Record } from "@/types/record";
 import Link from "next/link";
 
-export default async function UsersPage(props: { params: Promise<{ id: string }> }) {
+interface UsersPageProps {
+    params: Promise<{ id: string }>;
+}
+
+export default async function UsersPage(props: Readonly<UsersPageProps>) {
     const userService = new UsersService(serverAuthProvider)
     const recordService = new RecordService(serverAuthProvider)
     const user = await userService.getUserById((await props.params).id);
@@ -33,8 +37,8 @@ export default async function UsersPage(props: { params: Promise<{ id: string }>
                         <h2 className="text-xl font-semibold mt-8">Records</h2>
 
                         <div className="space-y-3 w-full">
-                            {records.map((record, i) => (
-                                <Card key={i} className="w-full">
+                            {records.map((record) => (
+                                <Card key={record.uri} className="w-full">
                                     <CardHeader>
                                         <CardTitle><Link href={record.uri} className="hover:underline">
                                             {record.name}

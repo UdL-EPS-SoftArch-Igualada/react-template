@@ -3,7 +3,7 @@
 import { UsersService } from "@/api/userApi";
 import { useAuth } from "@/app/components/authentication";
 import { Avatar } from "@/components/ui/avatar";
-import { clientAuthProvider } from "@/lib/authProvider";
+import { AUTH_COOKIE_NAME, clientAuthProvider } from "@/lib/authProvider";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deleteCookie } from "cookies-next";
@@ -15,7 +15,7 @@ export default function Loginbar() {
     const router = useRouter();
 
     function logout() {
-        deleteCookie("MYCOFFEE_AUTH");
+        deleteCookie(AUTH_COOKIE_NAME);
         setUser(null);
         router.push("/");
     }

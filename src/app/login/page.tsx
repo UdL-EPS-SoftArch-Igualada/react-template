@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { clientAuthProvider } from "@/lib/authProvider";
+import { AUTH_COOKIE_NAME, clientAuthProvider } from "@/lib/authProvider";
 import { deleteCookie, setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -25,8 +25,10 @@ export default function LoginPage() {
 
     async function login(username: string, password: string) {
         setErrorMessage(null);
-        const authorization = `Basic ${btoa(`${username}:${password}`)}`;
-        setCookie("MYCOFFEE_AUTH", authorization, {
+        // Use Buffer for base64 encoding (Node.js compatible)
+        const base64 = Buffer.from(`${username}:${password}`).toString('base64');
+        const authorization = `Basic ${base64}`;
+        setCookie(AUTH_COOKIE_NAME, authorization, {
             path: "/",
             secure: true,
             sameSite: "strict",
@@ -41,7 +43,7 @@ export default function LoginPage() {
         login(data.username, data.password).then(() => {
             router.push(`/users/${data.username}`);
         }).catch(() => {
-            deleteCookie("MYCOFFEE_AUTH");
+            deleteCookie(AUTH_COOKIE_NAME);
             setErrorMessage("Login failed");
         });
     };
