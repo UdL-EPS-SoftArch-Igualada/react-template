@@ -1,9 +1,9 @@
-import Link from "next/link";
-import {UsersService} from "@/api/userApi";
-import {serverAuthProvider} from "@/lib/authProvider";
-import {Record} from "@/types/record";
-import {RecordService} from "@/api/recordApi";
+import { RecordService } from "@/api/recordApi";
+import { UsersService } from "@/api/userApi";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { serverAuthProvider } from "@/lib/authProvider";
+import { Record } from "@/types/record";
+import Link from "next/link";
 
 export default async function UsersPage(props: { params: Promise<{ id: string }> }) {
     const userService = new UsersService(serverAuthProvider)

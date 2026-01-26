@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { UsersService } from "@/api/userApi";
 import { useAuth } from "@/app/components/authentication";
-import { deleteCookie, setCookie } from "cookies-next";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { UsersService } from "@/api/userApi";
 import { clientAuthProvider } from "@/lib/authProvider";
+import { deleteCookie, setCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 type FormValues = {
     username: string;
@@ -21,7 +21,7 @@ export default function LoginPage() {
     const router = useRouter();
     const { setUser } = useAuth();
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>();
-    const [ errorMessage, setErrorMessage ] = useState<string | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     async function login(username: string, password: string) {
         setErrorMessage(null);

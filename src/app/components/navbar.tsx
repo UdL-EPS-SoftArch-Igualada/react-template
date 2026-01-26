@@ -1,18 +1,18 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { useAuth } from "@/app/components/authentication";
 import Loginbar from "@/app/components/loginbar";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
     const pathname = usePathname();
-    const {user} = useAuth();
+    const { user } = useAuth();
 
     const navLinks = [
-        {href: "/", label: "Home"},
-        {href: "/users", label: "Users", roles: ["ROLE_USER"]}
+        { href: "/", label: "Home" },
+        { href: "/users", label: "Users", roles: ["ROLE_USER"] }
     ];
 
     return (
@@ -31,10 +31,10 @@ export default function Navbar() {
 
                 <div className="flex gap-4">
                     {navLinks
-                        .filter(({roles}) =>
+                        .filter(({ roles }) =>
                             !roles || user?.authorities?.some(
                                 userAuth => roles.includes(userAuth.authority)))
-                        .map(({href, label}) => {
+                        .map(({ href, label }) => {
                             const active = pathname === href;
                             return (
                                 <Link
@@ -53,7 +53,7 @@ export default function Navbar() {
                 </div>
 
                 <div className="ml-auto">
-                    <Loginbar/>
+                    <Loginbar />
                 </div>
 
             </div>

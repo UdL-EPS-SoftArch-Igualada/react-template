@@ -1,9 +1,9 @@
-import { getHal, mergeHal, mergeHalArray, postHal } from "./halClient";
 import type { AuthProvider } from "@/lib/authProvider";
 import { User } from "@/types/user";
+import { getHal, mergeHal, mergeHalArray, postHal } from "./halClient";
 
 export class UsersService {
-    constructor(private authProvider: AuthProvider) {
+    constructor(private readonly authProvider: AuthProvider) {
     }
 
     async getUsers(): Promise<User[]> {
@@ -17,7 +17,7 @@ export class UsersService {
         return mergeHal<User>(resource);
     }
 
-    async getCurrentUser(): Promise<User|null> {
+    async getCurrentUser(): Promise<User | null> {
         if (!await this.authProvider.getAuth()) {
             return null;
         }

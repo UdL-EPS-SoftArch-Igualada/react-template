@@ -1,9 +1,9 @@
-import Link from "next/link";
+import { RecordService } from "@/api/recordApi";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { serverAuthProvider } from "@/lib/authProvider";
-import { RecordService } from "@/api/recordApi";
 import { Record } from "@/types/record";
 import { User } from "@/types/user";
+import Link from "next/link";
 
 export default async function RecordPage(props: { params: Promise<{ id: string }> }) {
     const recordService = new RecordService(serverAuthProvider)
